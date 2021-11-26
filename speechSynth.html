@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  <script src="https://unpkg.com/launchdarkly-js-client-sdk@2"></script>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,6 +15,25 @@
 </head>
 
 <body>
+  <script>
+    const random = (Math.random() + 1).toString(36).substring(7);
+    var user = {
+      key: random
+    };
+  
+    var ldclient = LDClient.initialize('61a07b7107d4820f48ae8ae8', user);
+  
+    function render() {
+      var shouldShow = ldclient.variation('change-text', false);
+      if(shouldShow){
+        document.querySelector('h2').innerHTML = "New title"
+      }
+    }
+  
+    ldclient.on('ready', render);
+    ldclient.on('change', render);
+  </script>
+
   <header>
     <nav>
       <a href="index.html" title="Go to  party horn">Party Horn</a>

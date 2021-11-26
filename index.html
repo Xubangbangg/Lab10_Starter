@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  <script src="https://unpkg.com/launchdarkly-js-client-sdk@2"></script>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,7 +17,27 @@
   <script src="assets/scripts/partyHorn.js" type="module"></script>
 </head>
 
+
 <body>
+  <script>
+    const random = (Math.random() + 1).toString(36).substring(7);
+    var user = {
+      key: random
+    };
+  
+    var ldclient = LDClient.initialize('61a07b7107d4820f48ae8ae8', user);
+  
+    function render() {
+      var shouldShow = ldclient.variation('blue-background', false);
+      if(shouldShow){
+        document.body.classList.add('blue');
+      }
+    }
+  
+    ldclient.on('ready', render);
+    ldclient.on('change', render);
+  </script>
+  
   <header>
     <nav>
       <a href="speechSynth.html" title="Go to speech synthesizer">Speech Synthesizer</a>
@@ -43,5 +64,6 @@
     </section>
   </main>
 </body>
+
 
 </html>
